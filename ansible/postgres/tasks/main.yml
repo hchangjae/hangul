@@ -8,6 +8,10 @@
     repo: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
     state: present
 
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+
 - name: PostgreSQL | Install PostgreSQL
   ansible.builtin.apt:
     pkg:

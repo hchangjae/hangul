@@ -5,7 +5,7 @@ SSH_USER=ubuntu
 SSH_HOST=hangul.ing
 LOCAL_PORT=5432
 REMOTE_PORT=5432
-KEY_PATH=/Users/hcj/keys/default.pem
+KEY_PATH=/Users/master/keys/default.pem
 
 # Check if script argument is provided
 if [ "$#" -ne 1 ]; then

@@ -12,6 +12,16 @@
   ansible.builtin.apt:
     update_cache: yes
 
+- name: Ensure required dependencies are installed
+  ansible.builtin.apt:
+    pkg:
+      - libicu66
+      - libldap-2.4-2
+      - libllvm10
+      - libssl1.1
+    state: present
+    update_cache: yes
+
 - name: PostgreSQL | Install PostgreSQL
   ansible.builtin.apt:
     pkg:

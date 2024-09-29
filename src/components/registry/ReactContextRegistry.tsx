@@ -1,4 +1,3 @@
-import { LayoutContextState, Tab } from '@/pages/future/index.page';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 type Setter<T> = Dispatch<SetStateAction<T>>;
@@ -16,27 +15,14 @@ const ToastContextRegistry = ({ children }: { children: React.ReactNode }) => {
 };
 
 /**
- * Layout Context
- */
-export const LayoutContext = createContext<Context<LayoutContextState>>([{ tab: Tab.GAME }, () => ({})]);
-
-const LayoutContextRegistry = ({ children }: { children: React.ReactNode }) => {
-  const [layoutState, setLayoutState] = useState<LayoutContextState>({ tab: Tab.GAME });
-
-  return <LayoutContext.Provider value={[layoutState, setLayoutState]}>{children}</LayoutContext.Provider>;
-};
-
-/**
  * React Context
  */
 const ReactContextRegistry = ({ children }: { children: React.ReactNode }) => {
   return (
-    <LayoutContextRegistry>
-      <ToastContextRegistry>
-        {/* Comment 4 lint */}
-        {children}
-      </ToastContextRegistry>
-    </LayoutContextRegistry>
+    <ToastContextRegistry>
+      {/* Comment 4 lint */}
+      {children}
+    </ToastContextRegistry>
   );
 };
 

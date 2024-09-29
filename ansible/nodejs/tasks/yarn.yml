@@ -1,0 +1,14 @@
+- name: Add Yarn pubkey
+  shell: curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+  args:
+    creates: /usr/share/keyrings/yarnkey.gpg
+
+- name: Add Yarn repo
+  shell: echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  args:
+    creates: /etc/apt/sources.list.d/yarn.list
+
+- name: Install Yarn
+  apt:
+    name: yarn
+    update_cache: yes

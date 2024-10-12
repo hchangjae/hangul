@@ -12,7 +12,7 @@
 - name: Install Node
   apt:
     name: nodejs
-    update_cache: yes
+    update_cache: true
 
-- import_tasks: yarn.yml
-- import_tasks: pm2.yml
+- import_tasks: yarn.yaml
+- import_tasks: pm2.yaml

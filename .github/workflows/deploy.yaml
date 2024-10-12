@@ -42,7 +42,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          playbook: ansible/main.yml
+          playbook: ansible/main.yaml
           directory: ./
           configuration: |
             [defaults]

@@ -27,17 +27,17 @@
         cache_valid_time: 86400
         state: present
 
+    - name: Install adapter for PostgreSQL
+      ansible.builtin.apt:
+        pkg:
+          - python3-psycopg2
+        state: present
+
     - name: Ensure PostgreSQL is running
       ansible.builtin.service:
         name: postgresql
         state: started
         enabled: true
-
-    - name: Install acl for fix set permissions on the temporary files | apt
-      when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "20.04"
-      ansible.builtin.apt:
-        pkg: acl
-        state: present
 
     - name: Create database
       become: true

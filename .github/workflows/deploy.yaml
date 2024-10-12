@@ -44,6 +44,9 @@ jobs:
         with:
           playbook: ansible/main.yml
           directory: ./
+          configuration: |
+            [defaults]
+            stdout_callback = yaml
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           inventory: |
             [webservers]

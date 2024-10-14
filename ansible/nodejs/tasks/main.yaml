@@ -31,6 +31,7 @@
             state: present
             update_cache: true
             force: true
+            upgrade: safe
 
     - name: Global package
       ansible.builtin.include_tasks:

@@ -56,7 +56,12 @@
         db: mydb
         name: '{{ postgres_username }}'
         password: '{{ postgres_password }}'
-        priv: ALL/ALL
+
+
+    - name: Install acl for fix set permissions on the temporary files
+      ansible.builtin.apt:
+        name: acl
+        state: present
 
     - name: USAGE privilege on schema public
       become: true

@@ -74,14 +74,12 @@
         roles: '{{ postgres_username }}'
         objs: public
 
-    - name: Grant ALL privileges on all tables in schema public
+    - name: Grant ALL privileges on all tables in mydb database
       become: true
       become_method: ansible.builtin.sudo
       become_user: postgres
       community.postgresql.postgresql_privs:
-        db: postgres
+        db: mydb
         privs: ALL
         type: table
         roles: '{{ postgres_username }}'
-        objs: mydb
-        schema: public

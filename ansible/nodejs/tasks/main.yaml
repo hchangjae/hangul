@@ -12,10 +12,13 @@
       notify: Install
 
     - name: Global package
-      include_tasks:
-        - pm2.yaml
+      ansible.builtin.include_tasks:
+        file: pm2.yaml
 
-    - name: Package manager
-      include_tasks:
-        - yarn.yaml
-        - pnpm.yaml
+    - name: Include Yarn
+      ansible.builtin.include_tasks:
+        - file: yarn.yaml
+
+    - name: Include Pnpm
+      ansible.builtin.include_tasks:
+        - file: pnpm.yaml

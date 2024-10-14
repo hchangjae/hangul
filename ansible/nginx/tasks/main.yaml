@@ -11,5 +11,7 @@
         state: started
         enabled: true
 
-    - include_tasks:
-        - letsencrypt.yaml
+    - name: Include Letsencrypt
+      ansible.builtin.include_tasks:
+        file: letsencrypt.yaml
+

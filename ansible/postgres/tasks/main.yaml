@@ -15,10 +15,6 @@
       register: postgresql_versions
       changed_when: false
 
-    - name: Print available versions
-      ansible.builtin.debug:
-        var: postgresql_versions.stdout
-
     - name: Install PostgreSQL
       ansible.builtin.apt:
         pkg:
@@ -39,14 +35,6 @@
         state: started
         enabled: true
 
-    - name: Ensure locale is installed
-      ansible.builtin.command:
-        cmd: locale-gen ko_KR.UTF-8
-      become: true
-      become_method: ansible.builtin.sudo
-      register: locale_gen
-      changed_when: locale_gen.rc != 0
-
     - name: Create database
       become: true
       become_method: ansible.builtin.sudo
@@ -59,6 +47,7 @@
         name: mydb
         encoding: UTF-8
         state: present
+        locale_provider: icu
 
     - name: Create PostgreSQL user
       become: true

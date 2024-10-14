@@ -3,3 +3,18 @@
     name: nodejs
     update_cache: true
     state: present
+
+- name: yarn | Install
+  community.general.npm:
+    name: yarn
+    global: true
+    production: true
+    state: present
+
+- name: pnpm | Install
+  community.general.npm:
+    name: pnpm
+    global: true
+    production: true
+    state: present
+    force: true

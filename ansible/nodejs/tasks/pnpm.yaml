@@ -1,7 +1,12 @@
-- name: pnpm | Install
-  community.general.npm:
-    name: pnpm
-    global: true
-    production: true
-    state: present
-    force: true
+- name: pnpm | Check if pnpm is installed
+  ansible.builtin.command:
+    cmd: pnpm --version
+  register: pnpm_version
+  ignore_errors: true
+  changed_when: false
+
+- name: pnpm | Install if pnpm is not installed
+  ansible.builtin.debug:
+    msg: "Pnpm is not installed"
+  when: pnpm_version.rc != 0
+  notify: pnpm | Install

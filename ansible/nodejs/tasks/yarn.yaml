@@ -1,8 +1,12 @@
-- name: yarn | Install
-  community.general.npm:
-    name: yarn
-    global: true
-    production: true
-    state: present
-    force: true
+- name: yarn | Check if yarn is installed
+  ansible.builtin.command:
+    cmd: yarn --version
+  register: yarn_version
+  ignore_errors: true
+  changed_when: false
 
+- name: yarn | Install if yarn is not installed
+  ansible.builtin.debug:
+    msg: "Yarn is not installed"
+  when: yarn_version.rc != 0
+  notify: yarn | Install

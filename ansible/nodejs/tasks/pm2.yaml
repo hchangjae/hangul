@@ -1,7 +1,12 @@
-- name: pm2 | Install
-  community.general.npm:
-    name: pm2
-    global: true
-    production: true
-    state: present
-    force: true
+- name: pm2 | Check if pm2 is installed
+  ansible.builtin.command:
+    cmd: pm2 --version
+  register: pm2_version
+  ignore_errors: true
+  changed_when: false
+
+- name: pm2 | Install if pm2 is not installed
+  ansible.builtin.debug:
+    msg: "Pm2 is not installed"
+  when: pm2_version.rc != 0
+  notify: pm2 | Install

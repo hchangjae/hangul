@@ -33,6 +33,12 @@
           - python3-psycopg2
         state: present
 
+    - name: Install libpq-dev
+      ansible.builtin.apt:
+        pkg:
+          - libpq-dev
+        state: present
+
     - name: Ensure PostgreSQL is running
       ansible.builtin.service:
         name: postgresql

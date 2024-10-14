@@ -35,13 +35,6 @@
         state: started
         enabled: true
 
-
-    - name: Force-install collection community.postgresql at specific version
-      community.general.ansible_galaxy_install:
-        type: collection
-        name: community.postgresql:3.7.0
-        force: true
-
     - name: Create database
       become: true
       become_method: ansible.builtin.sudo

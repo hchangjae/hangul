@@ -1,0 +1,3 @@
+- name: community.postgresql
+  src: community.postgresql
+  version: 3.7.0

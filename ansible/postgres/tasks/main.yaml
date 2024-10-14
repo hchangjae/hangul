@@ -33,12 +33,6 @@
           - python3-psycopg2
         state: present
 
-    - name: Install libpq-dev
-      ansible.builtin.apt:
-        pkg:
-          - libpq-dev
-        state: present
-
     - name: Ensure PostgreSQL is running
       ansible.builtin.service:
         name: postgresql
@@ -52,6 +46,8 @@
       vars:
         ansible_ssh_pipelining: true
       community.postgresql.postgresql_db:
+        lc_collate: 'ko_KR.UTF-8'
+        lc_ctype: 'ko_KR.UTF-8'
         name: mydb
         encoding: UTF-8
         state: present

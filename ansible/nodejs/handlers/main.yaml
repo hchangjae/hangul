@@ -1,24 +1,40 @@
-- name: Install
-  ansible.builtin.apt:
-    name: nodejs
-    update_cache: true
-    state: present
+- name: Install Nodejs
+  block:
+    - name: Add NodeSource repository
+      ansible.builtin.get_url:
+        url: https://deb.nodesource.com/setup_20.x
+        dest: /tmp/nodesource_setup.sh
+        mode: '0755'
 
-- name: yarn | Install
+    - name: Run NodeSource setup script
+      become: true
+      become_method: ansible.builtin.sudo
+      ansible.builtin.command:
+        cmd: /tmp/nodesource_setup.sh
+      changed_when: false
+
+    - name: Run installation
+      ansible.builtin.package:
+        name: nodejs
+        state: present
+      become: true
+      become_method: ansible.builtin.sudo
+
+- name: Install yarn
   community.general.npm:
     name: yarn
     global: true
     production: true
     state: present
 
-- name: pnpm | Install
+- name: Install pnpm
   community.general.npm:
     name: pnpm
     global: true
     production: true
     state: present
 
-- name: pm2 | Install
+- name: Install pm2
   community.general.npm:
     name: pm2
     global: true

@@ -9,5 +9,5 @@
   ansible.builtin.debug:
     msg: "Pm2 is not installed"
   when: pm2_version.rc != 0
-  notify: pm2 | Install
+  notify: Install pm2
   changed_when: true

@@ -9,5 +9,5 @@
   ansible.builtin.debug:
     msg: "Pnpm is not installed"
   when: pnpm_version.rc != 0
-  notify: pnpm | Install
+  notify: Install pnpm
   changed_when: true

@@ -9,5 +9,5 @@
   ansible.builtin.debug:
     msg: "Yarn is not installed"
   when: yarn_version.rc != 0
-  notify: yarn | Install
+  notify: Install yarn
   changed_when: true

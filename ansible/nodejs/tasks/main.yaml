@@ -23,15 +23,14 @@
             cmd: /tmp/nodesource_setup.sh
           changed_when: false
 
-        - name: Run update
-          community.general.apk:
-            update_cache: true
-
         - name: Run installation
-          community.general.apk:
+          become: true
+          become_method: ansible.builtin.sudo
+          ansible.builtin.apt:
             name: nodejs
             state: present
-            no_cache: true
+            update_cache: true
+            force: true
 
     - name: Global package
       ansible.builtin.include_tasks:

@@ -1,4 +1,4 @@
-- name: Install Nodejs
+- name: Install nodejs
   block:
     - name: Add NodeSource repository
       ansible.builtin.get_url:

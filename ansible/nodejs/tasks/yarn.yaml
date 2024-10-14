@@ -4,5 +4,5 @@
     global: true
     production: true
     state: present
-  check_mode: true
+    force: true
 

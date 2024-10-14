@@ -4,3 +4,4 @@
     global: true
     production: true
     state: present
+    force: true

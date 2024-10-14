@@ -24,14 +24,11 @@
           changed_when: false
 
         - name: Run installation
-          become: true
-          become_method: ansible.builtin.sudo
           ansible.builtin.apt:
-            name: nodejs
+            name: nodejs=20.*
             state: present
             update_cache: true
             force: true
-            upgrade: safe
 
     - name: Global package
       ansible.builtin.include_tasks:

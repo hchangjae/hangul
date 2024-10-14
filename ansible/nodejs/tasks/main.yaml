@@ -26,11 +26,11 @@
         - name: Run installation
           become: true
           become_method: ansible.builtin.sudo
-          ansible.builtin.package:
+          community.general.apk:
             name: nodejs
             state: present
-
-
+            no_cache: true
+            upgrade: true
 
     - name: Global package
       ansible.builtin.include_tasks:

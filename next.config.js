@@ -5,12 +5,6 @@ const nextConfig = {
     return config;
   },
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
-  compiler: {
-    styledComponents: {
-      ssr: true,
-      displayName: true,
-    },
-  },
   headers: () => [
     {
       source: '/:path*',

@@ -1,8 +1,12 @@
+import dynamic from 'next/dynamic';
 import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
-const isNextAuthOn = process.env.NEXTAUTH_URL && process.env.NEXTAUTH_SECRET
+const useNextAuth = process.env.NEXTAUTH_URL && process.env.NEXTAUTH_SECRET
+
+const SessionProvider = dynamic(() => import('next-auth/react').then((mod) => mod.SessionProvider), {
+  ssr: !!useNextAuth,
+});
 
 type Props = {
   session: Session;
@@ -11,8 +15,8 @@ type Props = {
 
 const NextAuthRegistry = (props: Props) => {
   const { session, children } = props;
-  
-  if (!isNextAuthOn) {
+
+  if (!useNextAuth) {
     return <>{children}</>;
   }
 

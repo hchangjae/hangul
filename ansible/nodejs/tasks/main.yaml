@@ -14,6 +14,19 @@
       notify: Install
       changed_when: true
 
+    - name: Check if Node is installed
+      ansible.builtin.command:
+        cmd: node --version
+      register: node_version
+      ignore_errors: true
+
+    - name: Install Node
+      ansible.builtin.debug:
+        msg: "Node is not installed"
+      when: node_version.rc != 0
+      notify: Install
+      changed_when: true
+
     - name: Global package
       ansible.builtin.include_tasks:
         file: pm2.yaml

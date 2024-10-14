@@ -33,15 +33,11 @@
         name: nginx
         state: restarted
 
-    - name: letsencrypt | Create letsencrypt certificate
-      community.crypto.acme_certificate:
-        account_email: "{{ letsencrypt_email }}"
-        acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
-        challenge: "http"
-        domains: "{{ domain_name }}"
-        webroot: /var/www/letsencrypt
-        fullchain_dest: /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem
-        privkey_dest: /etc/letsencrypt/live/{{ domain_name }}/privkey.pem
+    - name: letsencrypt | Create letsencrypt certificate  # noqa: command-instead-of-module
+      ansible.builtin.command:
+        cmd: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_name }}
+      args:
+        creates: /etc/letsencrypt/live/{{ domain_name }}
 
     - name: letsencrypt | Generate dhparams
       community.crypto.openssl_dhparam:

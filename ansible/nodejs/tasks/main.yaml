@@ -7,7 +7,9 @@
         dest: /tmp/nodesource_setup.sh
         mode: "0755"
 
-    - name: Check if NodeSource repo was chagned
+    - name: Check if NodeSource repo was changed
+      ansible.builtin.debug:
+        msg: "NodeSource script changed"
       when: nodesource_script.changed
       notify: Install
 
@@ -17,8 +19,8 @@
 
     - name: Include Yarn
       ansible.builtin.include_tasks:
-        - file: yarn.yaml
+        file: yarn.yaml
 
     - name: Include Pnpm
       ansible.builtin.include_tasks:
-        - file: pnpm.yaml
+        file: pnpm.yaml

@@ -1,25 +1,3 @@
-- name: Install nodejs
-  block:
-    - name: Add NodeSource repository
-      ansible.builtin.get_url:
-        url: https://deb.nodesource.com/setup_20.x
-        dest: /tmp/nodesource_setup.sh
-        mode: '0755'
-
-    - name: Run NodeSource setup script
-      become: true
-      become_method: ansible.builtin.sudo
-      ansible.builtin.command:
-        cmd: /tmp/nodesource_setup.sh
-      changed_when: false
-
-    - name: Run installation
-      ansible.builtin.package:
-        name: nodejs
-        state: present
-      become: true
-      become_method: ansible.builtin.sudo
-
 - name: Install yarn
   community.general.npm:
     name: yarn

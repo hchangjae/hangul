@@ -10,3 +10,4 @@
     msg: "Pm2 is not installed"
   when: pm2_version.rc != 0
   notify: pm2 | Install
+  changed_when: true

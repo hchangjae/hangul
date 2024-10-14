@@ -10,3 +10,4 @@
     msg: "Pnpm is not installed"
   when: pnpm_version.rc != 0
   notify: pnpm | Install
+  changed_when: true

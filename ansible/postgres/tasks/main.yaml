@@ -39,6 +39,14 @@
         state: started
         enabled: true
 
+    - name: Ensure locale is installed
+      ansible.builtin.command:
+        cmd: locale-gen ko_KR.UTF-8
+      become: true
+      become_method: ansible.builtin.sudo
+      register: locale_gen
+      changed_when: locale_gen.rc != 0
+
     - name: Create database
       become: true
       become_method: ansible.builtin.sudo

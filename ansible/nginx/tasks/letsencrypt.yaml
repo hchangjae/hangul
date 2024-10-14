@@ -1,39 +1,60 @@
-- name: Install letsencrypt
-  apt: name=letsencrypt state=latest
+- name: letsencrypt | Install
+  ansible.builtin.apt:
+    name: letsencrypt
+    state: present
 
-- name: Create letsencrypt directory
-  file: name=/var/www/letsencrypt state=directory
+- name: letsencrypt | Setup
+  block:
+    - name: letsencrypt | Create letsencrypt directory
+      ansible.builtin.file:
+        name: /var/www/letsencrypt
+        state: directory
+        mode: '0755'
 
-- name: Remove default nginx config
-  file: name=/etc/nginx/sites-enabled/default state=absent
+    - name: letsencrypt | Remove default nginx config
+      ansible.builtin.file:
+        name: /etc/nginx/sites-enabled/default
+        state: absent
 
-- name: Install system nginx config
-  template:
-    src: ../templates/nginx.conf.j2
-    dest: /etc/nginx/nginx.conf
+    - name: letsencrypt | Install system nginx config
+      ansible.builtin.template:
+        src: ../templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        mode: '0644'
 
-- name: Install nginx site for letsencrypt requests
-  template:
-    src: ../templates/nginx-http.j2
-    dest: /etc/nginx/sites-enabled/http
+    - name: letsencrypt | Install nginx site for letsencrypt requests
+      ansible.builtin.template:
+        src: ../templates/nginx-http.j2
+        dest: /etc/nginx/sites-enabled/http
+        mode: '0644'
 
-- name: Reload nginx to activate specified site
-  service: name=nginx state=restarted
+    - name: letsencrypt | Reload nginx to activate specified site
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
 
-- name: Create letsencrypt certificate
-  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_name }}
-  args:
-    creates: /etc/letsencrypt/live/{{ domain_name }}
+    - name: letsencrypt | Create letsencrypt certificate
+      community.crypto.acme_certificate:
+        account_email: "{{ letsencrypt_email }}"
+        acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
+        challenge: "http"
+        domains: "{{ domain_name }}"
+        webroot: /var/www/letsencrypt
+        fullchain_dest: /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem
+        privkey_dest: /etc/letsencrypt/live/{{ domain_name }}/privkey.pem
 
-- name: Generate dhparams
-  shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
-  args:
-    creates: /etc/nginx/dhparams.pem
+    - name: letsencrypt | Generate dhparams
+      community.crypto.openssl_dhparam:
+        path: /etc/nginx/dhparams.pem
+        size: 2048
 
-- name: Install nginx site for specified site
-  template:
-    src: ../templates/nginx-le.j2
-    dest: /etc/nginx/sites-enabled/le
+    - name: letsencrypt | Install nginx site for specified site
+      ansible.builtin.template:
+        src: ../templates/nginx-le.j2
+        dest: /etc/nginx/sites-enabled/le
+        mode: '0644'
 
-- name: Reload nginx to activate specified site
-  service: name=nginx state=restarted
+    - name: letsencrypt | Reload nginx to activate specified site
+      ansible.builtin.service:
+        name: nginx
+        state: restarted

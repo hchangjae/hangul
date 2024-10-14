@@ -6,7 +6,7 @@
       ansible.builtin.apt:
         update_cache: true
         force_apt_get: true
-        cache_valid_time: 86400
+        cache_valid_time: 86400 # 1 day
   roles:
     - nginx
     - postgres

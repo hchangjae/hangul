@@ -1,6 +1,6 @@
-- name: yarn | Install
+- name: pnpm | Install
   community.general.npm:
-    name: yarn
+    name: pnpm
     global: true
     production: true
     state: present

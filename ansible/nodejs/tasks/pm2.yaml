@@ -1,5 +1,5 @@
-- name: Install pm2
-  npm:
+- name: pm2 | Install
+  community.general.npm:
     name: pm2
     global: true
     production: true

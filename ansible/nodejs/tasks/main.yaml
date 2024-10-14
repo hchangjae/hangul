@@ -1,18 +1,21 @@
-- name: Add NodeSource repo
-  shell: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-  args:
-    creates: /etc/apt/sources.list.d/nodesource.list
-  register: nodesource_script
+- name: Nodejs
+  block:
+    - name: Add NodeSource repo
+      register: nodesource_script
+      ansible.builtin.get_url:
+        url: https://deb.nodesource.com/setup_20.x
+        dest: /tmp/nodesource_setup.sh
+        mode: "0755"
 
-- name: Check if NodeSource repo was added
-  debug:
-    msg: 'NodeSource repo added'
-  when: nodesource_script.changed
+    - name: Check if NodeSource repo was chagned
+      when: nodesource_script.changed
+      notify: Install
 
-- name: Install Node
-  apt:
-    name: nodejs
-    update_cache: true
+    - name: Global package
+      include_tasks:
+        - pm2.yaml
 
-- import_tasks: yarn.yaml
-- import_tasks: pm2.yaml
+    - name: Package manager
+      include_tasks:
+        - yarn.yaml
+        - pnpm.yaml

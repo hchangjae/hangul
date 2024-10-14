@@ -35,6 +35,13 @@
         state: started
         enabled: true
 
+
+    - name: Force-install collection community.postgresql at specific version
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: community.postgresql:3.7.0
+        force: true
+
     - name: Create database
       become: true
       become_method: ansible.builtin.sudo
@@ -42,12 +49,9 @@
       vars:
         ansible_ssh_pipelining: true
       community.postgresql.postgresql_db:
-        lc_collate: 'ko_KR.UTF-8'
-        lc_ctype: 'ko_KR.UTF-8'
         name: mydb
         encoding: UTF-8
         state: present
-        locale_provider: icu
 
     - name: Create PostgreSQL user
       become: true

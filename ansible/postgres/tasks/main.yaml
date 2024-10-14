@@ -69,13 +69,10 @@
       become_user: postgres
       community.postgresql.postgresql_privs:
         db: mydb
-        schema: public
         privs: USAGE
         type: schema
         roles: '{{ postgres_username }}'
-        state: present
-        login_host: localhost
-        port: 5432
+        objs: public
 
     - name: Grant ALL privileges on all tables in schema public
       become: true
@@ -87,6 +84,3 @@
         privs: ALL
         type: table
         roles: '{{ postgres_username }}'
-        state: present
-        login_host: localhost
-        port: 5432

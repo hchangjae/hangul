@@ -79,8 +79,9 @@
       become_method: ansible.builtin.sudo
       become_user: postgres
       community.postgresql.postgresql_privs:
-        db: mydb
-        schema: public
+        db: postgres
         privs: ALL
         type: table
         roles: '{{ postgres_username }}'
+        objs: mydb
+        schema: public

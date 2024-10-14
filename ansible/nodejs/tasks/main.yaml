@@ -11,7 +11,7 @@
       ansible.builtin.debug:
         msg: "Node is not installed"
       when: node_version.rc != 0 or node_version.stdout.find('v20') == -1
-      notify: Install
+      notify: Install nodejs
       changed_when: true
 
     - name: Global package
